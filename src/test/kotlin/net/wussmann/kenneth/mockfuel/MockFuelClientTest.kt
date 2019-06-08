@@ -56,12 +56,4 @@ internal class MockFuelClientTest {
         // assert round-trip-time to at least be as long as we delayed it
         assertTrue(rtt >= delay)
     }
-
-    @Test
-    suspend fun `Should invoke executeRequest when awaitRequest is called`() {
-        instance.awaitRequest(Fuel.post("/test"))
-        verify {
-            instance.executeRequest(any())
-        }
-    }
 }
