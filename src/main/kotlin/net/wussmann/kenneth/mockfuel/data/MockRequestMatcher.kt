@@ -52,12 +52,13 @@ data class MockRequestMatcher(
                 return null
             }
 
-            return queryString.split("&").map {
+            return queryString.split("&").mapNotNull {
                 val pair = it.split("=")
                 if (pair.first() == "") {
-                    return null
+                    null
+                } else {
+                    pair.first() to pair.getOrNull(1)
                 }
-                pair.first() to pair.getOrNull(1)
             }
         }
     }
