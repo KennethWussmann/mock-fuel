@@ -57,7 +57,7 @@ internal class MockFuelStoreTest {
         val response = mockFuelStore.findResponse(Fuel.post("/test"))
 
         assertEquals(201, response.statusCode)
-        assertEquals(1, mockFuelStore.size) // specific request matchers are not cleared after serving
+        assertEquals(1, mockFuelStore.requestResponseMap.size) // specific request matchers are not cleared after serving
     }
 
     @Test
@@ -144,7 +144,7 @@ internal class MockFuelStoreTest {
 
         assertEquals(0, mockFuelStore.responseQueue.size)
         assertEquals(0, mockFuelStore.recordedRequests.size)
-        assertEquals(0, mockFuelStore.size)
+        assertEquals(0, mockFuelStore.requestResponseMap.size)
         assertEquals(404, mockFuelStore.defaultResponse.statusCode)
     }
 
@@ -161,9 +161,9 @@ internal class MockFuelStoreTest {
             MockResponse(statusCode = 200)
         }
 
-        assertEquals(1, mockFuelStore.size)
+        assertEquals(1, mockFuelStore.requestResponseMap.size)
 
-        val requestResponse = mockFuelStore.entries.first()
+        val requestResponse = mockFuelStore.requestResponseMap.entries.first()
 
         assertEquals(Method.DELETE, requestResponse.key.method)
         assertEquals("/something", requestResponse.key.path)

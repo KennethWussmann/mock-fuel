@@ -12,8 +12,9 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 /**
  * Store for Fuel responses to requests
  */
-class MockFuelStore : HashMap<MockRequestMatcher, MockResponse>() {
+class MockFuelStore {
 
+    var requestResponseMap: MutableMap<MockRequestMatcher, MockResponse> = mutableMapOf()
     var responseQueue: MutableList<MockResponse> = mutableListOf()
     var defaultResponse: MockResponse = createDefaultMockResponse()
     var recordedRequests: MutableList<MockRequestMatcher> = mutableListOf()
@@ -30,7 +31,7 @@ class MockFuelStore : HashMap<MockRequestMatcher, MockResponse>() {
     /**
      * Find a [MockResponse] for a given Fuel [Request]
      */
-    fun findResponse(request: Request): MockResponse = entries
+    fun findResponse(request: Request): MockResponse = requestResponseMap.entries
         .firstOrNull { (key, _) -> key.matches(request) }
         ?.value
         ?: takeFirst()
@@ -48,7 +49,7 @@ class MockFuelStore : HashMap<MockRequestMatcher, MockResponse>() {
     fun reset() {
         responseQueue.clear()
         recordedRequests.clear()
-        clear()
+        requestResponseMap.clear()
         defaultResponse = createDefaultMockResponse()
     }
 
@@ -73,7 +74,7 @@ class MockFuelStore : HashMap<MockRequestMatcher, MockResponse>() {
             queryParams
         )
         val response = answer()
-        put(matcher, response)
+        requestResponseMap[matcher] = response
     }
 
     /**
