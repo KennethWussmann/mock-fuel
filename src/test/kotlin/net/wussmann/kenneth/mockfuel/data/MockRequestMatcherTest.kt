@@ -7,28 +7,23 @@ import com.github.kittinunf.fuel.core.extensions.jsonBody
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
 
 internal class MockRequestMatcherTest {
 
-    private val exampleMockrequestMatcher = MockRequestMatcher(
-            method = Method.POST,
-            queryParams = listOf("abc" to "123"),
-            headers = Headers()
-                    .append("Example", "Hello")
-                    .append("Content-Type", "application/json"),
-            host = "fake.local",
-            path = "/test",
-            body = """{ "test": "abc" }""".toByteArray()
-    )
-    private val exampleFuelRequest = Fuel
-            .post("http://fake.local/test", listOf("abc" to "123"))
-            .header("Example", "Hello")
-            .jsonBody("""{ "test": "abc" }""")
-            .request
+    @ParameterizedTest
+    @MethodSource("createMockRequestMatcher")
+    fun `Should match fuel request`(mockRequestMatcher: MockRequestMatcher) {
+        assertTrue(mockRequestMatcher.matches(exampleFuelRequest))
+    }
 
-    @Test
-    fun `Should match fuel request`() {
-        assertTrue(exampleMockrequestMatcher.matches(exampleFuelRequest))
+    @ParameterizedTest
+    @MethodSource("createMockRequestMatcher")
+    fun `Should not match fuel request`(mockRequestMatcher: MockRequestMatcher) {
+        assertFalse(mockRequestMatcher.matches(
+            Fuel.delete("http://fake2.local/test123")
+        ))
     }
 
     @Test
@@ -40,11 +35,11 @@ internal class MockRequestMatcherTest {
     @Test
     fun `Should match example after fuel request was mapped with query params in url`() {
         val actual = MockRequestMatcher.from(
-                Fuel
-                        .post("http://fake.local/test?abc=123")
-                        .header("Example", "Hello")
-                        .jsonBody("""{ "test": "abc" }""")
-                        .request
+            Fuel
+                .post("http://fake.local/test?abc=123")
+                .header("Example", "Hello")
+                .jsonBody("""{ "test": "abc" }""")
+                .request
         )
         assertEquals(exampleMockrequestMatcher.toString(), actual.toString())
     }
@@ -52,8 +47,53 @@ internal class MockRequestMatcherTest {
     @Test
     fun `Should map empty query params in url`() {
         val actual = MockRequestMatcher.from(
-                Fuel.post("http://fake.local/test?")
+            Fuel.post("http://fake.local/test?")
         )
         assertEquals(listOf<Pair<String, Any?>>(), actual.queryParams)
+    }
+
+    companion object {
+        private val exampleMockrequestMatcher = MockRequestMatcher(
+            method = Method.POST,
+            queryParams = listOf("abc" to "123"),
+            headers = Headers()
+                .append("Example", "Hello")
+                .append("Content-Type", "application/json"),
+            host = "fake.local",
+            path = "/test",
+            body = """{ "test": "abc" }""".toByteArray()
+        )
+
+        private val exampleFuelRequest = Fuel
+            .post("http://fake.local/test", listOf("abc" to "123"))
+            .header("Example", "Hello")
+            .jsonBody("""{ "test": "abc" }""")
+            .request
+
+        @JvmStatic
+        @Suppress("unused")
+        fun createMockRequestMatcher() = listOf(
+            exampleMockrequestMatcher,
+            MockRequestMatcher(
+                method = Method.POST
+            ),
+            MockRequestMatcher(
+                queryParams = listOf("abc" to "123")
+            ),
+            MockRequestMatcher(
+                headers = Headers()
+                    .append("Example", "Hello")
+                    .append("Content-Type", "application/json")
+            ),
+            MockRequestMatcher(
+                host = "fake.local"
+            ),
+            MockRequestMatcher(
+                path = "/test"
+            ),
+            MockRequestMatcher(
+                body = """{ "test": "abc" }""".toByteArray()
+            )
+        )
     }
 }

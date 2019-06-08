@@ -26,7 +26,7 @@ data class MockRequestMatcher(
             path != null && request.url.path != path -> false
             host != null && request.url.host != host -> false
             body != null && !request.body.toByteArray().contentEquals(body) -> false
-            headers != null && !headers.entries.containsAll(request.headers.entries) -> false
+            headers != null && !request.headers.entries.containsAll(headers.entries) -> false
             queryParams != null && request.parameters != queryParams -> false
             else -> true
         }
