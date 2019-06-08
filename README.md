@@ -116,8 +116,8 @@ fun `Should ensure request structure`(mockFuelStore: MockFuelStore) {
             .header("X-Example" to "hello_world")
             .responseString()
     
-    // verifyRequest that there was a request.
-    // they are also in a queue and calling verifyRequest takes & removes the first
+    // verify that there was a request.
+    // requests are also in a queue and calling verifyRequest takes & removes the first
     mockFuelStore.verifyRequest {
         // it should be a POST
         assertMethod(Method.POST)
