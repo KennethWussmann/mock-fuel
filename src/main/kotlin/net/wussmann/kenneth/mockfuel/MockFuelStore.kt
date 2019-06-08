@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Assertions.assertNotNull
  */
 class MockFuelStore {
 
-    var requestResponseMap: MutableMap<MockRequestMatcher, MockResponse> = mutableMapOf()
-    var responseQueue: MutableList<MockResponse> = mutableListOf()
+    val requestResponseMap: MutableMap<MockRequestMatcher, MockResponse> = mutableMapOf()
+    val responseQueue: MutableList<MockResponse> = mutableListOf()
+    val recordedRequests: MutableList<MockRequestMatcher> = mutableListOf()
     var defaultResponse: MockResponse = createDefaultMockResponse()
-    var recordedRequests: MutableList<MockRequestMatcher> = mutableListOf()
 
     private fun takeFirst() = responseQueue.firstOrNull()?.also { responseQueue.removeAt(0) }
 
