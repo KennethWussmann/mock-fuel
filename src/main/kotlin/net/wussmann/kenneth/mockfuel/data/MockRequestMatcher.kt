@@ -48,7 +48,11 @@ data class MockRequestMatcher(
         }
 
         private fun mapQueryParams(queryString: String?): Parameters? {
-            return queryString?.split("&")?.mapNotNull {
+            if (queryString == null) {
+                return null
+            }
+
+            return queryString.split("&").mapNotNull {
                 val pair = it.split("=")
                 if (pair.isNotEmpty() && pair.first() != "") {
                     pair.first() to pair.getOrNull(1)
