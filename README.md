@@ -1,4 +1,7 @@
-# mock-fuel
+# mock-fuel [![](https://jitpack.io/v/KennethWussmann/mock-fuel.svg)](https://jitpack.io/#KennethWussmann/mock-fuel.svg) [![Build Status](https://travis-ci
+.org/KennethWussmann/mock-fuel.svg?branch=master)](https://travis-ci.org/KennethWussmann/mock-fuel) [![codecov]
+(https://codecov.io/gh/KennethWussmann/mock-fuel/branch/master/graph/badge.svg)](https://codecov.io/gh/KennethWussmann/mock-fuel)
+
 mock-fuel is a testing utility for the [Kotlin HTTP client Fuel](https://github.com/kittinunf/fuel). 
 
 ## Use case
@@ -27,9 +30,55 @@ That might lead to different exception handling and when you also use your own `
 * JUnit `>5.0`
 * Kotlin `>1.3.0`
 
-## Usage
+## Usage [![](https://jitpack.io/v/KennethWussmann/mock-fuel.svg)](https://jitpack.io/#KennethWussmann/mock-fuel.svg) 
 
 Setup your test dependencies to include mock-fuel. Make sure that you also provide Fuel. It's not bundled with mock-fuel.
+
+<details><summary>Maven</summary>
+<p>
+
+Replace `Version` with above latest version.
+
+```XML
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+```XML
+<dependencies>
+    <dependency>
+        <groupId>com.github.KennethWussmann</groupId>
+        <artifactId>mock-fuel</artifactId>
+        <version>VERSION</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
+
+</p>
+</details>
+
+<details><summary>Gradle</summary>
+<p>
+
+Replace `Version` with above latest version.
+
+
+```Groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    testCompile 'com.github.KennethWussmann:mock-fuel:VERSION' 
+}
+```
+
+</p>
+</details>
 
 ### Getting started
 To setup mock-fuel simply annotate your test class with `@ExtendWith`:
