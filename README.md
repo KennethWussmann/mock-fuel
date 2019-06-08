@@ -1,5 +1,5 @@
 # mock-fuel
-mock-fuel is a testing utility for the Kotlin HTTP client Fuel. 
+mock-fuel is a testing utility for the [Kotlin HTTP client Fuel](https://github.com/kittinunf/fuel). 
 
 ## Use case
 When you want to unit- or integration-test with external dependencies you often have to mock the external HTTP requests.
