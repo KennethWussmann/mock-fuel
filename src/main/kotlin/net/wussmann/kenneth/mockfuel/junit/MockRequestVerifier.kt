@@ -5,10 +5,7 @@ import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Method
 import com.github.kittinunf.fuel.core.Parameters
 import net.wussmann.kenneth.mockfuel.data.MockRequestMatcher
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 
 /**
  * Verification utility with shorthands for common assertions on a recorded [MockRequestMatcher]
@@ -17,23 +14,19 @@ import org.junit.jupiter.api.Assertions.assertTrue
 class MockRequestVerifier(private val mockRequestMatcher: MockRequestMatcher) {
 
     private fun findQueryParameterValues(key: String): List<Any?> {
-        assertAnyQueryParam()
-        requireNotNull(mockRequestMatcher.queryParams)
-        return mockRequestMatcher.queryParams.filter { it.first == key }.map { it.second }
+        return mockRequestMatcher.queryParams!!.filter { it.first == key }.map { it.second }
     }
 
     fun assertAnyBody() = assertNotNull(mockRequestMatcher.body, "Expected request body to be present but none found.")
 
     fun assertBody(expected: ByteArray) {
         assertAnyBody()
-        requireNotNull(mockRequestMatcher.body)
-        assertTrue(expected.contentEquals(mockRequestMatcher.body), "Expected body byte array contents to match.")
+        assertTrue(expected.contentEquals(mockRequestMatcher.body!!), "Expected body byte array contents to match.")
     }
 
     fun assertBody(expected: String) {
         assertAnyBody()
-        requireNotNull(mockRequestMatcher.body)
-        assertEquals(expected, String(mockRequestMatcher.body))
+        assertEquals(expected, String(mockRequestMatcher.body!!))
     }
 
     fun assertMethod(expected: Method) = assertEquals(expected, mockRequestMatcher.method)
@@ -80,17 +73,15 @@ class MockRequestVerifier(private val mockRequestMatcher: MockRequestMatcher) {
 
     fun assertHeader(expectedKey: String) {
         assertAnyHeader()
-        requireNotNull(mockRequestMatcher.headers)
         assertFalse(
-            mockRequestMatcher.headers[expectedKey].isEmpty(),
+            mockRequestMatcher.headers!![expectedKey].isEmpty(),
             """Expected request header <"$expectedKey"> to be present but was not found."""
         )
     }
 
     fun assertHeader(expectedKey: String, expectedValue: String) {
         assertHeader(expectedKey)
-        requireNotNull(mockRequestMatcher.headers)
-        val actual = mockRequestMatcher.headers[expectedKey]
+        val actual = mockRequestMatcher.headers!![expectedKey]
         if (actual.size == 1) {
             assertEquals(expectedValue, actual.first())
         } else {
@@ -103,8 +94,7 @@ class MockRequestVerifier(private val mockRequestMatcher: MockRequestMatcher) {
 
     fun assertHeaders(expectedKey: String, expectedValues: HeaderValues) {
         assertHeader(expectedKey)
-        requireNotNull(mockRequestMatcher.headers)
-        val actual = mockRequestMatcher.headers[expectedKey]
+        val actual = mockRequestMatcher.headers!![expectedKey]
         assertTrue(
             expectedValues.containsAll(actual),
             """Expected request header <"$expectedKey"> to equals <"$expectedValues"> but was <"$actual">"""
