@@ -105,21 +105,34 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.4</version>
                 <executions>
                     <execution>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
                     </execution>
                     <execution>
-                        <id>report</id>
-                        <phase>test</phase>
+                        <id>prepare-agent-integration</id>
                         <goals>
-                            <goal>report</goal>
+                            <goal>prepare-agent-integration</goal>
                         </goals>
+                        <configuration>
+                            <propertyName>failsafeArgLine</propertyName>
+                        </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <argLine>${surefireArgLine}</argLine>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.github.z3d1k</groupId>
