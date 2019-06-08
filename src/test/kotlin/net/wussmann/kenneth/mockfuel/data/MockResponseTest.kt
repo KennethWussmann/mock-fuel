@@ -34,6 +34,12 @@ internal class MockResponseTest {
     @Test
     fun `Should create string of ByteArray body`() {
         assertEquals("Hello World", exampleMockResponse.body())
+        assertEquals(Headers().append("Example", "Hello").toString(), exampleMockResponse.headers.toString())
+    }
+
+    @Test
+    fun `Should return null when ByteArray body is null`() {
+        assertEquals(null, MockResponse(statusCode = 200).body())
     }
 
     @Test
