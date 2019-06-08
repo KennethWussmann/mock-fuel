@@ -1,6 +1,4 @@
-# mock-fuel [![](https://jitpack.io/v/KennethWussmann/mock-fuel.svg)](https://jitpack.io/#KennethWussmann/mock-fuel.svg) [![Build Status](https://travis-ci
-.org/KennethWussmann/mock-fuel.svg?branch=master)](https://travis-ci.org/KennethWussmann/mock-fuel) [![codecov]
-(https://codecov.io/gh/KennethWussmann/mock-fuel/branch/master/graph/badge.svg)](https://codecov.io/gh/KennethWussmann/mock-fuel)
+# mock-fuel [![](https://jitpack.io/v/KennethWussmann/mock-fuel.svg)](https://jitpack.io/#KennethWussmann/mock-fuel.svg) [![Build Status](https://travis-ci.org/KennethWussmann/mock-fuel.svg?branch=master)](https://travis-ci.org/KennethWussmann/mock-fuel) [![codecov](https://codecov.io/gh/KennethWussmann/mock-fuel/branch/master/graph/badge.svg)](https://codecov.io/gh/KennethWussmann/mock-fuel)
 
 mock-fuel is a testing utility for the [Kotlin HTTP client Fuel](https://github.com/kittinunf/fuel). 
 
