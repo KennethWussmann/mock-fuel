@@ -5,7 +5,7 @@ plugins {
     id 'io.gitlab.arturbosch.detekt' version '1.0.0-RC15'
 }
 
-group 'net.wussmann.kenneth'
+group 'com.github.KennethWussmann'
 version '1.0.0-SNAPSHOT'
 
 apply plugin: 'maven'
