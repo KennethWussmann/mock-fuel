@@ -55,7 +55,7 @@ internal class MyAwesomeTest {
 
 ### Enqueue
 Enqueuing is the simplest. You just put a response to a queue and every time Fuel is doing a request the first element of the queue
-will be served as response. Enqueued responses will be removed from the queue when the were served to a request.
+will be served as response. Enqueued responses will be removed from the queue when they were served to a request.
 
 ```kotlin
 @Test
@@ -88,16 +88,19 @@ Dispatching allows you to serve certain responses when expected requests where m
 ```kotlin
 @Test
 fun `Should return response for certain request`(mockFuelStore: MockFuelStore) {
-    mockFuelStore.enqueue(
-            MockResponse(statusCode = 200)
-    )
+    mockFuelStore.on(method = Method.POST, path = "/test") {
+            MockResponse(
+                    statusCode = 200,
+                    body = """{ "success": true }""".toByteArray()
+            )
+    }
 
     val (_, response, result) = Fuel
             .post("/test")
             .body("{}")
             .responseString()
 
-    assertEquals(201, response.statusCode)
+    assertEquals(200, response.statusCode)
     assertEquals("""{ "success": true }""", result.get())
 }
 ```
