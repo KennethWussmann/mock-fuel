@@ -8,6 +8,8 @@ plugins {
 group 'net.wussmann.kenneth'
 version '1.0.0-SNAPSHOT'
 
+apply plugin: 'maven'
+
 repositories {
     mavenCentral()
     jcenter()
