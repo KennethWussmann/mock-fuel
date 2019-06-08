@@ -11,10 +11,10 @@ import java.net.URL
  * Representation of a response that should be returned
  */
 data class MockResponse(
-        val statusCode: Int,
-        val body: ByteArray? = null,
-        val headers: Headers = Headers(),
-        val delay: Long = 0
+    val statusCode: Int,
+    val body: ByteArray? = null,
+    val headers: Headers = Headers(),
+    val delay: Long = 0
 ) {
     /**
      * Get the body as string

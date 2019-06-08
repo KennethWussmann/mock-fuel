@@ -16,7 +16,6 @@ import org.junit.jupiter.api.extension.ParameterContext
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import java.io.File
-import kotlin.reflect.KClass
 
 internal class MockFuelExtensionTest {
 

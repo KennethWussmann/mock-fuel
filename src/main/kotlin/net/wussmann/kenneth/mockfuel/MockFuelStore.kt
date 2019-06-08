@@ -23,18 +23,18 @@ class MockFuelStore : HashMap<MockRequestMatcher, MockResponse>() {
     private fun takeFirstRecorded() = recordedRequests.firstOrNull()?.also { recordedRequests.removeAt(0) }
 
     private fun createDefaultMockResponse(): MockResponse = MockResponse(
-            headers = Headers(),
-            statusCode = 404
+        headers = Headers(),
+        statusCode = 404
     )
 
     /**
      * Find a [MockResponse] for a given Fuel [Request]
      */
     fun findResponse(request: Request): MockResponse = entries
-            .firstOrNull { (key, _) -> key.matches(request) }
-            ?.value
-            ?: takeFirst()
-            ?: defaultResponse
+        .firstOrNull { (key, _) -> key.matches(request) }
+        ?.value
+        ?: takeFirst()
+        ?: defaultResponse
 
     /**
      * Add the response to the queue.
@@ -56,21 +56,21 @@ class MockFuelStore : HashMap<MockRequestMatcher, MockResponse>() {
      * When a request is made that matches here given attributes it will respond with the given [MockResponse]
      */
     fun on(
-            method: Method? = null,
-            path: String? = null,
-            host: String? = null,
-            body: ByteArray? = null,
-            headers: Headers? = null,
-            queryParams: Parameters? = null,
-            answer: () -> MockResponse
+        method: Method? = null,
+        path: String? = null,
+        host: String? = null,
+        body: ByteArray? = null,
+        headers: Headers? = null,
+        queryParams: Parameters? = null,
+        answer: () -> MockResponse
     ) {
         val matcher = MockRequestMatcher(
-                method,
-                path,
-                host,
-                body,
-                headers,
-                queryParams
+            method,
+            path,
+            host,
+            body,
+            headers,
+            queryParams
         )
         val response = answer()
         put(matcher, response)

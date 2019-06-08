@@ -9,14 +9,13 @@ import com.github.kittinunf.fuel.core.Request
  * Representation for a request to match it against Fuel request
  */
 data class MockRequestMatcher(
-        val method: Method? = null,
-        val path: String? = null,
-        val host: String? = null,
-        val body: ByteArray? = null,
-        val headers: Headers? = null,
-        val queryParams: Parameters? = null
+    val method: Method? = null,
+    val path: String? = null,
+    val host: String? = null,
+    val body: ByteArray? = null,
+    val headers: Headers? = null,
+    val queryParams: Parameters? = null
 ) {
-
 
     /**
      * Check if the given Fuel [Request] is matching this [MockRequestMatcher]

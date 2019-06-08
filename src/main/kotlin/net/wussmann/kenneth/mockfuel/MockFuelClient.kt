@@ -3,7 +3,6 @@ package net.wussmann.kenneth.mockfuel
 import com.github.kittinunf.fuel.core.Client
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
-import com.github.kittinunf.fuel.core.requests.isCancelled
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import net.wussmann.kenneth.mockfuel.data.MockRequestMatcher
