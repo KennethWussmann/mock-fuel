@@ -3,6 +3,8 @@ package net.wussmann.kenneth.mockfuel
 import com.github.kittinunf.fuel.core.Client
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import net.wussmann.kenneth.mockfuel.data.MockRequestMatcher
 
 /**
@@ -14,7 +16,9 @@ class MockFuelClient(private val mockFuelStore: MockFuelStore) : Client {
         val response = mockFuelStore.findResponse(request)
         mockFuelStore.recordedRequests.add(MockRequestMatcher.from(request))
         if (response.delay > 0) {
-            Thread.sleep(response.delay)
+            runBlocking {
+                delay(response.delay)
+            }
         }
         return response.toResponse(request.url)
     }
