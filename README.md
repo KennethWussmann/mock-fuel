@@ -28,11 +28,9 @@ That might lead to different exception handling and when you also use your own `
 * JUnit `>5.0`
 * Kotlin `>1.3.0`
 
-Keep in mind that mock-fuel doesn't contain any third party dependencies - you have to provide them.
-
 ## Usage [![](https://jitpack.io/v/KennethWussmann/mock-fuel.svg)](https://jitpack.io/#KennethWussmann/mock-fuel.svg) 
 
-Setup your test dependencies to include mock-fuel. Make sure that you also provide Fuel. It's not bundled with mock-fuel.
+Setup your test dependencies to include mock-fuel. Make sure that you also provide an own version of Fuel. 
 
 <details><summary>Maven</summary>
 <p>
