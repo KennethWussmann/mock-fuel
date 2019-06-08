@@ -2,6 +2,8 @@ package net.wussmann.kenneth.mockfuel
 
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
+import io.mockk.spyk
+import io.mockk.verify
 import net.wussmann.kenneth.mockfuel.data.MockResponse
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -13,7 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource
 internal class MockFuelClientTest {
 
     private val mockFuelStore = MockFuelStore()
-    private val instance = MockFuelClient(mockFuelStore)
+    private val instance = spyk(MockFuelClient(mockFuelStore))
 
     @BeforeEach
     internal fun setUp() {
@@ -53,5 +55,13 @@ internal class MockFuelClientTest {
 
         // assert round-trip-time to at least be as long as we delayed it
         assertTrue(rtt >= delay)
+    }
+
+    @Test
+    suspend fun `Should invoke executeRequest when awaitRequest is called`() {
+        instance.awaitRequest(Fuel.post("/test"))
+        verify {
+            instance.executeRequest(any())
+        }
     }
 }
