@@ -40,6 +40,10 @@ detekt {
     config = files("detekt-config.yml")
 }
 
+jacoco {
+    toolVersion = "0.8.4"
+}
+
 test {
     dependsOn lintKotlin
     useJUnitPlatform()
