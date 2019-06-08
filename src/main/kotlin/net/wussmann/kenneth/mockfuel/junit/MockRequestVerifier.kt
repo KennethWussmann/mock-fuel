@@ -78,7 +78,7 @@ class MockRequestVerifier(private val mockRequestMatcher: MockRequestMatcher) {
     fun assertAnyHeader() =
         assertNotNull(mockRequestMatcher.headers, "Expected request header to be present but none found.")
 
-    fun assertHeader(expectedKey: String) = {
+    fun assertHeader(expectedKey: String) {
         assertAnyHeader()
         requireNotNull(mockRequestMatcher.headers)
         assertFalse(
@@ -113,5 +113,4 @@ class MockRequestVerifier(private val mockRequestMatcher: MockRequestMatcher) {
 
     fun assertHeaders(expectedHeaders: Headers) =
         assertEquals(expectedHeaders.toString(), mockRequestMatcher.headers.toString())
-}
 }
