@@ -23,7 +23,7 @@ The biggest benefit is also a pitfall. Be aware that mock-fuel is overriding the
 That might lead to different exception handling and when you also use your own `Client` implementation for Fuel mock-fuel will not work for you.
 
 ### Requirements
-* Fuel `>1.0.0` (not compatible with Fuel 2.0 yet)
+* Fuel `>2.0.0`
 * JUnit `>5.0`
 * Kotlin `>1.3.0`
 
