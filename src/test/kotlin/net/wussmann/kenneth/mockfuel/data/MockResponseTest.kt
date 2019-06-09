@@ -32,6 +32,11 @@ internal class MockResponseTest {
     )
 
     @Test
+    fun `Should return predefined MockResponse`() {
+        assertEquals(408, MockResponse.timeout().statusCode)
+    }
+
+    @Test
     fun `Should create string of ByteArray body`() {
         assertEquals("Hello World", exampleMockResponse.body())
         assertEquals(Headers().append("Example", "Hello").toString(), exampleMockResponse.headers.toString())

@@ -34,4 +34,11 @@ data class MockResponse(
                 DefaultBody.from(bodySource, bodyLength, Charsets.UTF_8)
             } else DefaultBody()
     )
+
+    companion object {
+        /**
+         * Predefined [MockResponse] for a request that timed-out
+         */
+        fun timeout() = MockResponse(statusCode = 408)
+    }
 }
