@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'net.wussmann.kenneth'
-version '1.0.2-SNAPSHOT'
+version '1.0.2'
 
 repositories {
     mavenCentral()
@@ -41,10 +41,13 @@ publishing {
                 username System.getenv('MVN_DEPLOY_USR')
                 password System.getenv('MVN_DEPLOY_PWD')
             }
-            def repo = "https://repo.ketrwu.host"
-            def releasesRepoUrl = "$repo/repository/releases"
-            def snapshotsRepoUrl = "$repo/repository/snapshots"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            def repo = 'https://repo.ketrwu.host'
+            if (!project.hasProperty('release')) {
+                version += '-SNAPSHOT'
+                url = "$repo/repository/snapshots"
+            } else {
+                url = "$repo/repository/releases"
+            }
         }
     }
     publications {
@@ -79,13 +82,13 @@ publishing {
 }
 
 detekt {
-    input = files("src/main/kotlin")
-    filters = ".*/resources/.*,.*/build/.*,.*test.*,.*/model/.*"
-    config = files("detekt-config.yml")
+    input = files('src/main/kotlin')
+    filters = '.*/resources/.*,.*/build/.*,.*test.*,.*/model/.*'
+    config = files('detekt-config.yml')
 }
 
 jacoco {
-    toolVersion = "0.8.4"
+    toolVersion = '0.8.4'
 }
 
 test {
