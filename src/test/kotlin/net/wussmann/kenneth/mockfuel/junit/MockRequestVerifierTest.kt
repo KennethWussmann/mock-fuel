@@ -19,6 +19,8 @@ internal class MockRequestVerifierTest {
                     body = """{ "test": "abc" }""".toByteArray()
             )
     )
+    
+    private fun withInstance(task: MockRequestVerifier.() -> Unit) = instance.task()
 
     @Test
     fun `Should assert any body is present`() {
@@ -27,27 +29,42 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert body equals ByteArray`() {
-        instance.assertBody("""{ "test": "abc" }""".toByteArray())
+        withInstance {
+            assertBody("""{ "test": "abc" }""".toByteArray())
+            request body """{ "test": "abc" }""".toByteArray()
+        }
     }
 
     @Test
     fun `Should assert body equals String`() {
-        instance.assertBody("""{ "test": "abc" }""")
+        withInstance {
+            assertBody("""{ "test": "abc" }""")
+            request body """{ "test": "abc" }"""
+        }
     }
 
     @Test
     fun `Should assert request method is POST`() {
-        instance.assertMethod(Method.POST)
+        withInstance {
+            assertMethod(Method.POST)
+            request method Method.POST
+        }
     }
 
     @Test
     fun `Should assert host equals`() {
-        instance.assertHost("fake.local")
+        withInstance {
+            assertHost("fake.local")
+            request host "fake.local"
+        }
     }
 
     @Test
     fun `Should assert path equals`() {
-        instance.assertPath("/test")
+        withInstance {
+            assertPath("/test")
+            request host "/test"
+        }
     }
 
     @Test
@@ -57,25 +74,42 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert query param with given key is present no matter of its value`() {
-        instance.assertQueryParam("abc")
+        withInstance {
+            assertQueryParam("abc")
+            request queryParam "abc"
+        }
     }
 
     @Test
     fun `Should assert query param has given value`() {
-        instance.assertQueryParam("abc", "123")
-        instance.assertQueryParam("abc", "456")
+        withInstance {
+            assertQueryParam("abc", "123")
+            assertQueryParam("abc", "456")
+
+            request queryParam "abc" to "123"
+            request queryParam "abc" to "456"
+        }
     }
 
     @Test
     fun `Should assert query param has all given values`() {
-        instance.assertQueryParams("abc", listOf("123", "456"))
+        withInstance {
+            assertQueryParams("abc", listOf("123", "456"))
+            request queryParams ("abc" to listOf("123", "456"))
+
+        }
     }
 
     @Test
     fun `Should assert all query params exactly match given value`() {
-        instance.assertQueryParams(listOf(
+        withInstance {
+            assertQueryParams(listOf(
                 "abc" to "123", "abc" to "456", "def" to "789"
-        ))
+            ))
+            request queryParams listOf(
+                "abc" to "123", "abc" to "456", "def" to "789"
+            )
+        }
     }
 
     @Test
@@ -85,26 +119,42 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert header with given key is present no matter of its value`() {
-        instance.assertHeader("Example")
+        withInstance {
+            assertHeader("Example")
+            request header "Example"
+        }
     }
 
     @Test
     fun `Should assert header exists with given value`() {
-        instance.assertHeader("Example", "Hello")
-        instance.assertHeader("Example", "World")
+        withInstance {
+            assertHeader("Example", "Hello")
+            assertHeader("Example", "World")
+
+            request header "Example" to "Hello"
+            request header "Example" to "World"
+        }
     }
 
     @Test
     fun `Should assert header has all given values`() {
-        instance.assertHeaders("Example", listOf("Hello", "World"))
+        withInstance {
+            assertHeaders("Example", listOf("Hello", "World"))
+            request headers ("Example" to listOf("Hello", "World"))
+        }
     }
 
     @Test
     fun `Should assert all headers exactly match given value`() {
-        instance.assertHeaders(
+        withInstance {
+            assertHeaders(
                 Headers()
-                        .append("Example", listOf("Hello", "World"))
-                        .append("Content-Type", "application/json")
-        )
+                    .append("Example", listOf("Hello", "World"))
+                    .append("Content-Type", "application/json")
+            )
+            request headers Headers()
+                .append("Example", listOf("Hello", "World"))
+                .append("Content-Type", "application/json")
+        }
     }
 }

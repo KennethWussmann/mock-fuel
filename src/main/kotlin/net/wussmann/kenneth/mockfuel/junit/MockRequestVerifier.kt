@@ -22,29 +22,43 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
 
     fun assertAnyBody() = assertNotNull(request.body, "Expected request body to be present but none found.")
 
+    infix fun MockRequestMatcher.body(expected: ByteArray) = assertBody(expected)
+
     fun assertBody(expected: ByteArray) {
         assertAnyBody()
         assertTrue(expected.contentEquals(request.body!!), "Expected body byte array contents to match.")
     }
+
+    infix fun MockRequestMatcher.body(expected: String) = assertBody(expected)
 
     fun assertBody(expected: String) {
         assertAnyBody()
         assertEquals(expected, String(request.body!!))
     }
 
+    infix fun MockRequestMatcher.method(expected: Method) = assertMethod(expected)
+
     fun assertMethod(expected: Method) = assertEquals(expected, request.method)
 
+    infix fun MockRequestMatcher.host(expected: String) = assertHost(expected)
+
     fun assertHost(expected: String) = assertEquals(expected, request.host)
+
+    infix fun MockRequestMatcher.path(expected: String) = assertPath(expected)
 
     fun assertPath(expected: String) = assertEquals(expected, request.path)
 
     fun assertAnyQueryParam() =
         assertNotNull(request.queryParams, "Expected request query parameters to be present but none found.")
 
+    infix fun MockRequestMatcher.queryParam(expectedKey: String) = assertQueryParam(expectedKey)
+
     fun assertQueryParam(expectedKey: String) = assertFalse(
         findQueryParameterValues(expectedKey).isEmpty(),
         """Expected request query parameter <"$expectedKey"> to be present but was not found."""
     )
+
+    infix fun MockRequestMatcher.queryParam(expected: Pair<String, String>) = assertQueryParam(expected.first, expected.second)
 
     fun assertQueryParam(expectedKey: String, expectedValue: Any) {
         assertQueryParam(expectedKey)
@@ -59,6 +73,8 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
         }
     }
 
+    infix fun MockRequestMatcher.queryParams(expected: Pair<String, Collection<Any>>) = assertQueryParams(expected.first, expected.second)
+
     fun assertQueryParams(expectedKey: String, expectedValues: Collection<Any>) {
         assertQueryParam(expectedKey)
         val actual = findQueryParameterValues(expectedKey)
@@ -68,11 +84,15 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
         )
     }
 
+    infix fun MockRequestMatcher.queryParams(expected: Parameters) = assertQueryParams(expected)
+
     fun assertQueryParams(expectedQueryParams: Parameters) =
         assertEquals(expectedQueryParams, request.queryParams)
 
     fun assertAnyHeader() =
         assertNotNull(request.headers, "Expected request header to be present but none found.")
+
+    infix fun MockRequestMatcher.header(expectedKey: String) = assertHeader(expectedKey)
 
     fun assertHeader(expectedKey: String) {
         assertAnyHeader()
@@ -81,6 +101,8 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
             """Expected request header <"$expectedKey"> to be present but was not found."""
         )
     }
+
+    infix fun MockRequestMatcher.header(expected: Pair<String, String>) = assertHeader(expected.first, expected.second)
 
     fun assertHeader(expectedKey: String, expectedValue: String) {
         assertHeader(expectedKey)
@@ -95,6 +117,8 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
         }
     }
 
+    infix fun MockRequestMatcher.headers(expected: Pair<String, HeaderValues>) = assertHeaders(expected.first, expected.second)
+
     fun assertHeaders(expectedKey: String, expectedValues: HeaderValues) {
         assertHeader(expectedKey)
         val actual = request.headers!![expectedKey]
@@ -103,6 +127,8 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
             """Expected request header <"$expectedKey"> to equals <"$expectedValues"> but was <"$actual">"""
         )
     }
+
+    infix fun MockRequestMatcher.headers(expected: Headers) = assertHeaders(expected)
 
     fun assertHeaders(expectedHeaders: Headers) =
         assertEquals(expectedHeaders.toString(), request.headers.toString())
