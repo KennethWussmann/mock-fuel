@@ -35,7 +35,7 @@ Setup your test dependencies to include mock-fuel. Make sure that you also provi
 <details><summary>Maven</summary>
 <p>
 
-Replace `VERSION` with above latest release version.
+Replace `VERSION` with above latest release version **without `v`**.
 
 ```XML
 <dependencies>
@@ -61,7 +61,7 @@ Replace `VERSION` with above latest release version.
 <details><summary>Gradle</summary>
 <p>
 
-Replace `VERSION` with above latest release version.
+Replace `VERSION` with above latest release version **without `v`**.
 
 
 ```Groovy
