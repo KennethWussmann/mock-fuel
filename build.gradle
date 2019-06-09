@@ -3,12 +3,11 @@ plugins {
     id 'jacoco'
     id 'org.jmailen.kotlinter' version '1.26.0'
     id 'io.gitlab.arturbosch.detekt' version '1.0.0-RC15'
+    id 'maven-publish'
 }
 
-group 'com.github.KennethWussmann'
-version '1.0.0-SNAPSHOT'
-
-apply plugin: 'maven'
+group 'net.wussmann.kenneth'
+version '1.0.2-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -33,6 +32,50 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = '1.8'
+}
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username System.getenv('MVN_DEPLOY_USR')
+                password System.getenv('MVN_DEPLOY_PWD')
+            }
+            def repo = "https://repo.ketrwu.host"
+            def releasesRepoUrl = "$repo/repository/releases"
+            def snapshotsRepoUrl = "$repo/repository/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            from components.java
+
+            pom {
+                name = 'mock-fuel'
+                description = 'Mocking Fuel HTTP requests in Kotlin with ease'
+                url = 'https://kenneth.wussmann.net/'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://raw.githubusercontent.com/KennethWussmann/mock-fuel/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'KennethWussmann'
+                        name = 'Kenneth Wußmann'
+                        email = 'kenneth@wussmann.net'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/KennethWussmann/mock-fuel.git'
+                    developerConnection = 'scm:git:git@github.com:KennethWussmann/mock-fuel.git'
+                    url = 'https://github.com/KennethWussmann/mock-fuel'
+                }
+            }
+        }
+    }
 }
 
 detekt {
