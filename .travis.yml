@@ -3,3 +3,10 @@ jdk: openjdk9
 sudo: false
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+deploy:
+  provider: script
+  script: "./gradlew -Prelease deploy"
+  skip_cleanup: true
+  on:
+    tags: true
