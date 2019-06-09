@@ -1,7 +1,17 @@
-# mock-fuel ![GitHub release](https://img.shields.io/github/release/KennethWussmann/mock-fuel.svg) [![Build Status](https://travis-ci.org/KennethWussmann/mock-fuel.svg?branch=master)](https://travis-ci.org/KennethWussmann/mock-fuel) [![codecov](https://codecov.io/gh/KennethWussmann/mock-fuel/branch/master/graph/badge.svg)](https://codecov.io/gh/KennethWussmann/mock-fuel)
+<p align="center">
+   <img src="https://i.imgur.com/vYzAuDu.png" /><br />
+   <img src="https://img.shields.io/github/release/KennethWussmann/mock-fuel.svg" /> 
+   <a href="https://travis-ci.org/KennethWussmann/mock-fuel">
+      <img src="https://travis-ci.org/KennethWussmann/mock-fuel.svg?branch=master" />
+   </a>
+   <a href="https://codecov.io/gh/KennethWussmann/mock-fuel">
+      <img src="https://codecov.io/gh/KennethWussmann/mock-fuel/branch/master/graph/badge.svg" />   
+   </a>
+   <br />
+   Testing utility for the <a href="https://github.com/kittinunf/fuel">Kotlin HTTP client Fuel</a> powered by JUnit 5 
 
-mock-fuel is a testing utility for the [Kotlin HTTP client Fuel](https://github.com/kittinunf/fuel). 
-
+</p>
+   
 ## Use case
 When you want to unit- or integration-test with external dependencies you often have to mock the external HTTP requests.
 In the same step you might also want to ensure the request to the external service is correct formatted and structured. 
