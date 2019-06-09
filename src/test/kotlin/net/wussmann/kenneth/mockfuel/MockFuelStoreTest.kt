@@ -24,7 +24,7 @@ internal class MockFuelStoreTest {
 
     @Test
     fun `Should find enqueued response`() {
-        mockFuelStore.enqueue(MockResponse(statusCode = 200))
+        mockFuelStore enqueue MockResponse(statusCode = 200)
 
         val response = mockFuelStore.findResponse(Fuel.post("/test"))
 

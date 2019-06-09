@@ -51,14 +51,17 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
     fun assertAnyQueryParam() =
         assertNotNull(request.queryParams, "Expected request query parameters to be present but none found.")
 
-    infix fun MockRequestMatcher.queryParam(expectedKey: String) = assertQueryParam(expectedKey)
+    infix fun MockRequestMatcher.queryParam(expectedKey: String): VerifierPair<Any> {
+        assertQueryParam(expectedKey)
+        return VerifierPair {
+            assertQueryParam(expectedKey, it)
+        }
+    }
 
     fun assertQueryParam(expectedKey: String) = assertFalse(
         findQueryParameterValues(expectedKey).isEmpty(),
         """Expected request query parameter <"$expectedKey"> to be present but was not found."""
     )
-
-    infix fun MockRequestMatcher.queryParam(expected: Pair<String, String>) = assertQueryParam(expected.first, expected.second)
 
     fun assertQueryParam(expectedKey: String, expectedValue: Any) {
         assertQueryParam(expectedKey)
@@ -73,7 +76,12 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
         }
     }
 
-    infix fun MockRequestMatcher.queryParams(expected: Pair<String, Collection<Any>>) = assertQueryParams(expected.first, expected.second)
+    infix fun MockRequestMatcher.queryParams(expectedKey: String): VerifierPair<Collection<Any>> {
+        assertQueryParam(expectedKey)
+        return VerifierPair {
+            assertQueryParams(expectedKey, it)
+        }
+    }
 
     fun assertQueryParams(expectedKey: String, expectedValues: Collection<Any>) {
         assertQueryParam(expectedKey)
@@ -89,10 +97,14 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
     fun assertQueryParams(expectedQueryParams: Parameters) =
         assertEquals(expectedQueryParams, request.queryParams)
 
-    fun assertAnyHeader() =
-        assertNotNull(request.headers, "Expected request header to be present but none found.")
+    fun assertAnyHeader() = assertNotNull(request.headers, "Expected request header to be present but none found.")
 
-    infix fun MockRequestMatcher.header(expectedKey: String) = assertHeader(expectedKey)
+    infix fun MockRequestMatcher.header(expectedKey: String): VerifierPair<String> {
+        assertHeader(expectedKey)
+        return VerifierPair {
+            assertHeader(expectedKey, it)
+        }
+    }
 
     fun assertHeader(expectedKey: String) {
         assertAnyHeader()
@@ -101,8 +113,6 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
             """Expected request header <"$expectedKey"> to be present but was not found."""
         )
     }
-
-    infix fun MockRequestMatcher.header(expected: Pair<String, String>) = assertHeader(expected.first, expected.second)
 
     fun assertHeader(expectedKey: String, expectedValue: String) {
         assertHeader(expectedKey)
@@ -117,7 +127,12 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
         }
     }
 
-    infix fun MockRequestMatcher.headers(expected: Pair<String, HeaderValues>) = assertHeaders(expected.first, expected.second)
+    infix fun MockRequestMatcher.headers(expectedKey: String): VerifierPair<HeaderValues> {
+        assertHeader(expectedKey)
+        return VerifierPair {
+            assertHeaders(expectedKey, it)
+        }
+    }
 
     fun assertHeaders(expectedKey: String, expectedValues: HeaderValues) {
         assertHeader(expectedKey)
@@ -132,4 +147,12 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
 
     fun assertHeaders(expectedHeaders: Headers) =
         assertEquals(expectedHeaders.toString(), request.headers.toString())
+
+    /**
+     * Helper for neat infix syntax
+     */
+    class VerifierPair<T>(private val task: (T) -> Unit) {
+
+        infix fun eq(second: T) = task(second)
+    }
 }

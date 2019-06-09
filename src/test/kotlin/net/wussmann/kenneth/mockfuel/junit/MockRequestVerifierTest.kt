@@ -4,6 +4,7 @@ import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Method
 import net.wussmann.kenneth.mockfuel.data.MockRequestMatcher
 import org.junit.jupiter.api.Test
+import kotlin.test.assertFails
 
 internal class MockRequestVerifierTest {
 
@@ -84,8 +85,12 @@ internal class MockRequestVerifierTest {
             assertQueryParam("abc", "123")
             assertQueryParam("abc", "456")
 
-            request queryParam "abc" to "123"
-            request queryParam "abc" to "456"
+            request queryParam "abc" eq "123"
+            request queryParam "abc" eq "456"
+
+            assertFails {
+                request queryParam "abc" eq "fail!"
+            }
         }
     }
 
@@ -93,7 +98,7 @@ internal class MockRequestVerifierTest {
     fun `Should assert query param has all given values`() {
         with(instance) {
             assertQueryParams("abc", listOf("123", "456"))
-            request queryParams ("abc" to listOf("123", "456"))
+            request queryParams "abc" eq listOf("123", "456")
         }
     }
 
@@ -128,8 +133,8 @@ internal class MockRequestVerifierTest {
             assertHeader("Example", "Hello")
             assertHeader("Example", "World")
 
-            request header "Example" to "Hello"
-            request header "Example" to "World"
+            request header "Example" eq "Hello"
+            request header "Example" eq "World"
         }
     }
 
@@ -137,7 +142,7 @@ internal class MockRequestVerifierTest {
     fun `Should assert header has all given values`() {
         with(instance) {
             assertHeaders("Example", listOf("Hello", "World"))
-            request headers ("Example" to listOf("Hello", "World"))
+            request headers "Example" eq listOf("Hello", "World")
         }
     }
 

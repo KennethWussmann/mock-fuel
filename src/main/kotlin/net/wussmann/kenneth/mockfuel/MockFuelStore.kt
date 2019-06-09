@@ -88,3 +88,8 @@ class MockFuelStore {
         task?.invoke(MockRequestVerifier(record!!))
     }
 }
+
+/**
+ * Infix for enqueuing [MockResponse]s to the [MockFuelStore]
+ */
+infix fun MockFuelStore.enqueue(mockResponse: MockResponse) = this.enqueue(mockResponse)
