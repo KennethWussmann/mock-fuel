@@ -20,8 +20,6 @@ internal class MockRequestVerifierTest {
             )
     )
 
-    private fun withInstance(task: MockRequestVerifier.() -> Unit) = instance.task()
-
     @Test
     fun `Should assert any body is present`() {
         instance.assertAnyBody()
@@ -29,7 +27,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert body equals ByteArray`() {
-        withInstance {
+        with(instance) {
             assertBody("""{ "test": "abc" }""".toByteArray())
             request body """{ "test": "abc" }""".toByteArray()
         }
@@ -37,7 +35,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert body equals String`() {
-        withInstance {
+        with(instance) {
             assertBody("""{ "test": "abc" }""")
             request body """{ "test": "abc" }"""
         }
@@ -45,7 +43,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert request method is POST`() {
-        withInstance {
+        with(instance) {
             assertMethod(Method.POST)
             request method Method.POST
         }
@@ -53,7 +51,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert host equals`() {
-        withInstance {
+        with(instance) {
             assertHost("fake.local")
             request host "fake.local"
         }
@@ -61,9 +59,9 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert path equals`() {
-        withInstance {
+        with(instance) {
             assertPath("/test")
-            request host "/test"
+            request path "/test"
         }
     }
 
@@ -74,7 +72,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert query param with given key is present no matter of its value`() {
-        withInstance {
+        with(instance) {
             assertQueryParam("abc")
             request queryParam "abc"
         }
@@ -82,7 +80,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert query param has given value`() {
-        withInstance {
+        with(instance) {
             assertQueryParam("abc", "123")
             assertQueryParam("abc", "456")
 
@@ -93,7 +91,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert query param has all given values`() {
-        withInstance {
+        with(instance) {
             assertQueryParams("abc", listOf("123", "456"))
             request queryParams ("abc" to listOf("123", "456"))
         }
@@ -101,7 +99,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert all query params exactly match given value`() {
-        withInstance {
+        with(instance) {
             assertQueryParams(listOf(
                 "abc" to "123", "abc" to "456", "def" to "789"
             ))
@@ -118,7 +116,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert header with given key is present no matter of its value`() {
-        withInstance {
+        with(instance) {
             assertHeader("Example")
             request header "Example"
         }
@@ -126,7 +124,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert header exists with given value`() {
-        withInstance {
+        with(instance) {
             assertHeader("Example", "Hello")
             assertHeader("Example", "World")
 
@@ -137,7 +135,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert header has all given values`() {
-        withInstance {
+        with(instance) {
             assertHeaders("Example", listOf("Hello", "World"))
             request headers ("Example" to listOf("Hello", "World"))
         }
@@ -145,7 +143,7 @@ internal class MockRequestVerifierTest {
 
     @Test
     fun `Should assert all headers exactly match given value`() {
-        withInstance {
+        with(instance) {
             assertHeaders(
                 Headers()
                     .append("Example", listOf("Hello", "World"))
