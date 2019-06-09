@@ -1,4 +1,4 @@
-# mock-fuel [![GitHub version](https://badge.fury.io/gh/KennethWussmann%2Fmock-fuel.svg)](https://badge.fury.io/gh/KennethWussmann%2Fmock-fuel) [![Build Status](https://travis-ci.org/KennethWussmann/mock-fuel.svg?branch=master)](https://travis-ci.org/KennethWussmann/mock-fuel) [![codecov](https://codecov.io/gh/KennethWussmann/mock-fuel/branch/master/graph/badge.svg)](https://codecov.io/gh/KennethWussmann/mock-fuel)
+# mock-fuel ![GitHub release](https://img.shields.io/github/release/KennethWussmann/mock-fuel.svg) [![Build Status](https://travis-ci.org/KennethWussmann/mock-fuel.svg?branch=master)](https://travis-ci.org/KennethWussmann/mock-fuel) [![codecov](https://codecov.io/gh/KennethWussmann/mock-fuel/branch/master/graph/badge.svg)](https://codecov.io/gh/KennethWussmann/mock-fuel)
 
 mock-fuel is a testing utility for the [Kotlin HTTP client Fuel](https://github.com/kittinunf/fuel). 
 
@@ -28,14 +28,14 @@ That might lead to different exception handling and when you also use your own `
 * JUnit `>5.0`
 * Kotlin `>1.3.0`
 
-## Usage [![GitHub version](https://badge.fury.io/gh/KennethWussmann%2Fmock-fuel.svg)](https://badge.fury.io/gh/KennethWussmann%2Fmock-fuel)
+## Usage ![GitHub release](https://img.shields.io/github/release/KennethWussmann/mock-fuel.svg)
 
 Setup your test dependencies to include mock-fuel. Make sure that you also provide an own version of Fuel. 
 
 <details><summary>Maven</summary>
 <p>
 
-Replace `VERSION` with above latest version.
+Replace `VERSION` with above latest release version.
 
 ```XML
 <dependencies>
@@ -61,7 +61,7 @@ Replace `VERSION` with above latest version.
 <details><summary>Gradle</summary>
 <p>
 
-Replace `VERSION` with above latest version.
+Replace `VERSION` with above latest release version.
 
 
 ```Groovy
