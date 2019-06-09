@@ -12,6 +12,16 @@ import org.junit.jupiter.params.provider.MethodSource
 
 internal class MockRequestMatcherTest {
 
+    @Test
+    fun `Should create string of ByteArray body`() {
+        assertEquals("""{ "test": "abc" }""", exampleMockrequestMatcher.body())
+    }
+
+    @Test
+    fun `Should return null of ByteArray body when no body set`() {
+        assertEquals(null, MockRequestMatcher().body())
+    }
+
     @ParameterizedTest
     @MethodSource("createMockRequestMatcher")
     fun `Should match fuel request`(mockRequestMatcher: MockRequestMatcher) {

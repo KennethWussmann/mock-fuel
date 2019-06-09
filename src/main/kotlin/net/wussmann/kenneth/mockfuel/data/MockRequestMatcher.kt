@@ -16,6 +16,10 @@ data class MockRequestMatcher(
     val headers: Headers? = null,
     val queryParams: Parameters? = null
 ) {
+    /**
+     * Get the body as string
+     */
+    fun body(): String? = body?.let { String(it) }
 
     /**
      * Check if the given Fuel [Request] is matching this [MockRequestMatcher]
