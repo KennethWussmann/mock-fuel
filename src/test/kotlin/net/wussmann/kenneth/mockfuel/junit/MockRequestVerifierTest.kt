@@ -19,7 +19,7 @@ internal class MockRequestVerifierTest {
                     body = """{ "test": "abc" }""".toByteArray()
             )
     )
-    
+
     private fun withInstance(task: MockRequestVerifier.() -> Unit) = instance.task()
 
     @Test
@@ -96,7 +96,6 @@ internal class MockRequestVerifierTest {
         withInstance {
             assertQueryParams("abc", listOf("123", "456"))
             request queryParams ("abc" to listOf("123", "456"))
-
         }
     }
 
