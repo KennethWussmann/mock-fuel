@@ -6,7 +6,7 @@ after_success:
 
 deploy:
   provider: script
-  script: "./gradlew -Prelease deploy"
+  script: "./gradlew -Prelease publish"
   skip_cleanup: true
   on:
     tags: true
