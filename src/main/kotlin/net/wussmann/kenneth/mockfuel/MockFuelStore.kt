@@ -93,3 +93,13 @@ class MockFuelStore {
  * Infix for enqueuing [MockResponse]s to the [MockFuelStore]
  */
 infix fun MockFuelStore.enqueue(mockResponse: MockResponse) = this.enqueue(mockResponse)
+
+/**
+ * Infix for verifying the next request in queue
+ */
+infix fun MockFuelStore.verify(task: (MockRequestVerifier.() -> Unit)?) = this.verifyRequest(task)
+
+/**
+ * Function to indicate any request should be present
+ */
+fun any() = null

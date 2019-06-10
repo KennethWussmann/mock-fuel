@@ -202,6 +202,32 @@ internal class MockFuelStoreTest {
     }
 
     @Test
+    fun `Should take first recorded request and verify it using infix`() {
+        mockFuelStore.recordedRequests.add(
+                MockRequestMatcher(
+                        method = Method.POST,
+                        queryParams = listOf("abc" to "123"),
+                        headers = Headers()
+                                .append("Example", "Hello")
+                                .append("Content-Type", "application/json"),
+                        host = "fake.local",
+                        path = "/test",
+                        body = """{ "test": "abc" }""".toByteArray()
+                )
+        )
+
+        mockFuelStore verify {
+            request method Method.POST
+            request queryParam "abc" eq "123"
+            request header "Example" eq "Hello"
+            request header "Content-Type" eq "application/json"
+            request host "fake.local"
+            request path "/test"
+            request body """{ "test": "abc" }"""
+        }
+    }
+
+    @Test
     fun `Should assert any recorded request was found`() {
         mockFuelStore.recordedRequests.add(
                 MockRequestMatcher(
@@ -217,6 +243,24 @@ internal class MockFuelStoreTest {
         )
 
         mockFuelStore.verifyRequest()
+    }
+
+    @Test
+    fun `Should assert any recorded request was found using infix`() {
+        mockFuelStore.recordedRequests.add(
+                MockRequestMatcher(
+                        method = Method.POST,
+                        queryParams = listOf("abc" to "123"),
+                        headers = Headers()
+                                .append("Example", "Hello")
+                                .append("Content-Type", "application/json"),
+                        host = "fake.local",
+                        path = "/test",
+                        body = """{ "test": "abc" }""".toByteArray()
+                )
+        )
+
+        mockFuelStore verify any()
     }
 
     @Test
