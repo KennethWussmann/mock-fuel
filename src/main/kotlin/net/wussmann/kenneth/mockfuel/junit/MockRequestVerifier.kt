@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 @Suppress("TooManyFunctions")
 class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request: MockRequestMatcher) {
 
-    private fun findQueryParameterValues(key: String): List<Any?> {
-        return request.queryParams!!.filter { it.first == key }.map { it.second }
+    fun Parameters.get(key: String): List<Any?> {
+        return this.filter { it.first == key }.map { it.second }
     }
 
     fun assertAnyBody() = assertNotNull(request.body, "Expected request body to be present but none found.")
@@ -59,13 +59,13 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
     }
 
     fun assertQueryParam(expectedKey: String) = assertFalse(
-        findQueryParameterValues(expectedKey).isEmpty(),
+        request.queryParams?.get(expectedKey)?.isEmpty() == true,
         """Expected request query parameter <"$expectedKey"> to be present but was not found."""
     )
 
     fun assertQueryParam(expectedKey: String, expectedValue: Any) {
         assertQueryParam(expectedKey)
-        val actual = findQueryParameterValues(expectedKey)
+        val actual = request.queryParams!!.get(expectedKey)
         if (actual.size == 1) {
             assertEquals(expectedValue, actual.first())
         } else {
@@ -85,7 +85,7 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
 
     fun assertQueryParams(expectedKey: String, expectedValues: Collection<Any>) {
         assertQueryParam(expectedKey)
-        val actual = findQueryParameterValues(expectedKey)
+        val actual = request.queryParams!!.get(expectedKey)
         assertTrue(
             expectedValues.containsAll(actual),
             """Expected request query parameter <"$expectedKey"> to equals <"$expectedValues"> but was <"$actual">"""
