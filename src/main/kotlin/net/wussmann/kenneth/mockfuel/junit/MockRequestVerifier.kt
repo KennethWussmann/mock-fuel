@@ -59,7 +59,7 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
     }
 
     fun assertQueryParam(expectedKey: String) = assertFalse(
-        request.queryParams?.get(expectedKey)?.isEmpty() == true,
+        request.queryParams?.get(expectedKey)?.isEmpty() != false,
         """Expected request query parameter <"$expectedKey"> to be present but was not found."""
     )
 

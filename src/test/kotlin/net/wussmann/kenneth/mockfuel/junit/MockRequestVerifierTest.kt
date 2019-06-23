@@ -78,9 +78,10 @@ internal class MockRequestVerifierTest {
             request queryParam "abc"
         }
         with(MockRequestVerifier(MockRequestMatcher(
-            queryParams = listOf("abc" to null)
+            queryParams = listOf("abc" to null, "def" to "")
         ))) {
             assertQueryParam("abc")
+            assertQueryParam("def")
             request queryParam "abc"
         }
     }
@@ -93,6 +94,11 @@ internal class MockRequestVerifierTest {
             }
             assertFails {
                 request queryParam "test"
+            }
+        }
+        with(MockRequestVerifier(MockRequestMatcher())) {
+            assertFails {
+                assertQueryParam("abc")
             }
         }
     }
