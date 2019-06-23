@@ -1,6 +1,6 @@
 <p align="center">
    <img src="https://i.imgur.com/vYzAuDu.png" /><br />
-   <img src="https://img.shields.io/github/release/KennethWussmann/mock-fuel.svg" /> 
+   <img src="https://jitpack.io/v/KennethWussmann/mock-fuel.svg" />
    <a href="https://travis-ci.org/KennethWussmann/mock-fuel">
       <img src="https://travis-ci.org/KennethWussmann/mock-fuel.svg?branch=master" />
    </a>
@@ -38,19 +38,19 @@ That might lead to different exception handling and when you also use your own `
 * JUnit `>5.0`
 * Kotlin `>1.3.0`
 
-## Usage ![GitHub release](https://img.shields.io/github/release/KennethWussmann/mock-fuel.svg)
+## Usage [![](https://jitpack.io/v/KennethWussmann/mock-fuel.svg)](https://jitpack.io/#KennethWussmann/mock-fuel)
 
 Setup your test dependencies to include mock-fuel. Make sure that you also provide an own version of Fuel. 
 
 <details><summary>Maven</summary>
 <p>
 
-Replace `VERSION` with above latest release version **without `v`**.
+Replace `VERSION` with above latest release version.
 
 ```XML
 <dependencies>
     <dependency>
-        <groupId>net.wussmann.kenneth</groupId>
+        <groupId>com.github.KennethWussmann</groupId>
         <artifactId>mock-fuel</artifactId>
         <version>VERSION</version>
         <scope>test</scope>
@@ -58,10 +58,10 @@ Replace `VERSION` with above latest release version **without `v`**.
 </dependencies>
 
 <repositories>
-    <repository>
-        <id>mock-fuel</id>
-        <url>https://repo.ketrwu.host/repository/releases</url>
-    </repository>
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
 </repositories>
 ```
 
@@ -71,16 +71,16 @@ Replace `VERSION` with above latest release version **without `v`**.
 <details><summary>Gradle</summary>
 <p>
 
-Replace `VERSION` with above latest release version **without `v`**.
+Replace `VERSION` with above latest release version.
 
 
 ```Groovy
 repositories {
-    maven { url 'https://repo.ketrwu.host/repository/releases' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    testCompile 'net.wussmann.kenneth:mock-fuel:VERSION' 
+    testCompile 'com.github.KennethWussmann:mock-fuel:VERSION' 
 }
 ```
 
