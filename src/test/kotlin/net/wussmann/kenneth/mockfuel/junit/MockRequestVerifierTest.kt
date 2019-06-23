@@ -77,6 +77,24 @@ internal class MockRequestVerifierTest {
             assertQueryParam("abc")
             request queryParam "abc"
         }
+        with(MockRequestVerifier(MockRequestMatcher(
+            queryParams = listOf("abc" to null)
+        ))) {
+            assertQueryParam("abc")
+            request queryParam "abc"
+        }
+    }
+
+    @Test
+    fun `Should assert query param with given key is not present`() {
+        with(instance) {
+            assertFails {
+                assertQueryParam("test")
+            }
+            assertFails {
+                request queryParam "test"
+            }
+        }
     }
 
     @Test
