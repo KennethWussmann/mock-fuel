@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.fail
 
 /**
  * Verification utility with shorthands for common assertions on a recorded [MockRequestMatcher]
@@ -58,10 +59,16 @@ class MockRequestVerifier(@Suppress("MemberVisibilityCanBePrivate") val request:
         }
     }
 
-    fun assertQueryParam(expectedKey: String) = assertFalse(
-        request.queryParams?.get(expectedKey)?.isEmpty() != false,
-        """Expected request query parameter <"$expectedKey"> to be present but was not found."""
-    )
+    fun assertQueryParam(expectedKey: String) {
+        if (request.queryParams == null) {
+            assertAnyQueryParam()
+            return
+        }
+        assertFalse(
+            request.queryParams.get(expectedKey).isEmpty(),
+            """Expected request query parameter <"$expectedKey"> to be present but was not found."""
+        )
+    }
 
     fun assertQueryParam(expectedKey: String, expectedValue: Any) {
         assertQueryParam(expectedKey)
