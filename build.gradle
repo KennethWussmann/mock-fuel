@@ -4,10 +4,11 @@ plugins {
     id 'org.jmailen.kotlinter' version '1.26.0'
     id 'io.gitlab.arturbosch.detekt' version '1.0.1'
     id 'maven-publish'
+    id 'com.palantir.git-version' version '0.12.0-rc2'
 }
 
+version versionDetails().lastTag
 group 'net.wussmann.kenneth'
-version '1.2.0'
 
 repositories {
     mavenCentral()
@@ -41,7 +42,7 @@ publishing {
                 username "KennethWussmann"
                 password System.getenv('MVN_DEPLOY_PWD')
             }
-            url = URL("https://maven.pkg.github.com/KennethWussmann/mock-fuel")
+            url = "https://maven.pkg.github.com/KennethWussmann/mock-fuel"
         }
     }
     publications {

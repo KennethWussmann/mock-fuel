@@ -1,12 +1,14 @@
 language: java
 jdk: openjdk9
 sudo: false
+script:
+  - "make VERSION=$TRAVIS_TAG"
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 deploy:
   provider: script
-  script: "./gradlew -Prelease publish"
+  script: "./gradlew publish"
   skip_cleanup: true
   on:
     tags: true
