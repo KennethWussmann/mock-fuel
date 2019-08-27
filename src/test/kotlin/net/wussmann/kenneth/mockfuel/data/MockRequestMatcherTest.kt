@@ -4,9 +4,8 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Method
 import com.github.kittinunf.fuel.core.extensions.jsonBody
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
