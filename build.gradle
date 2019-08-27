@@ -38,16 +38,10 @@ publishing {
     repositories {
         maven {
             credentials {
-                username System.getenv('MVN_DEPLOY_USR')
+                username "KennethWussmann"
                 password System.getenv('MVN_DEPLOY_PWD')
             }
-            def repo = 'https://repo.ketrwu.host'
-            if (!project.hasProperty('release')) {
-                version += '-SNAPSHOT'
-                url = "$repo/repository/snapshots"
-            } else {
-                url = "$repo/repository/releases"
-            }
+            url = URL("https://maven.pkg.github.com/KennethWussmann/mock-fuel")
         }
     }
     publications {
