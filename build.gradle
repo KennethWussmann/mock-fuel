@@ -40,7 +40,7 @@ publishing {
         maven {
             credentials {
                 username "KennethWussmann"
-                password System.getenv('MVN_DEPLOY_PWD')
+                password System.getenv('GITHUB_TOKEN')
             }
             url = "https://maven.pkg.github.com/KennethWussmann/mock-fuel"
         }
