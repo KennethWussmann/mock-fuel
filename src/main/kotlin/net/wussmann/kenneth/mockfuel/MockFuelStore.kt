@@ -87,10 +87,6 @@ class MockFuelStore {
         assertNotNull(record, "Expected request was made but none found.")
         task?.invoke(MockRequestVerifier(record!!))
     }
-
-    fun droppingTheCoverage() {
-        println("Drop the coverage!")
-    }
 }
 
 /**
