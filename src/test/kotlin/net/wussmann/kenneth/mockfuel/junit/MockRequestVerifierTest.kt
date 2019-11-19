@@ -2,9 +2,9 @@ package net.wussmann.kenneth.mockfuel.junit
 
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Method
+import kotlin.test.assertFails
 import net.wussmann.kenneth.mockfuel.data.MockRequestMatcher
 import org.junit.jupiter.api.Test
-import kotlin.test.assertFails
 
 internal class MockRequestVerifierTest {
 

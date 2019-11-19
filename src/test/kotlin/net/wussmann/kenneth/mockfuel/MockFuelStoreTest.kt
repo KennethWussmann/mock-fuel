@@ -4,13 +4,12 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Method
+import kotlin.test.assertFails
 import net.wussmann.kenneth.mockfuel.data.MockRequestMatcher
 import net.wussmann.kenneth.mockfuel.data.MockResponse
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.assertFails
+import org.junit.jupiter.api.Test
 
 internal class MockFuelStoreTest {
 

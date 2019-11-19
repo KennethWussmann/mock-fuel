@@ -5,17 +5,16 @@ import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.toolbox.HttpClient
 import io.mockk.every
 import io.mockk.mockk
+import java.io.File
 import net.wussmann.kenneth.mockfuel.MockFuelClient
 import net.wussmann.kenneth.mockfuel.MockFuelStore
 import net.wussmann.kenneth.mockfuel.data.MockResponse
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ParameterContext
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import java.io.File
 
 internal class MockFuelExtensionTest {
 

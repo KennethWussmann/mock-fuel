@@ -5,9 +5,9 @@ import com.github.kittinunf.fuel.core.BodySource
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.fuel.core.requests.DefaultBody
+import java.net.URL
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import java.net.URL
 
 internal class MockResponseTest {
 
