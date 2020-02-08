@@ -169,7 +169,7 @@ internal class MockFuelStoreTest {
         assertEquals("/something", requestResponse.key.path)
         assertEquals("fake.local", requestResponse.key.host)
         assertTrue("Something".toByteArray().contentEquals(requestResponse.key.body!!))
-        assertEquals(mapOf("Example" to listOf("Test")) as Headers, requestResponse.key.headers)
+        assertEquals(listOf("Test"), requestResponse.key.headers?.get("Example"))
         assertEquals(listOf("abc" to "123"), requestResponse.key.queryParams)
 
         assertEquals(200, requestResponse.value.statusCode)
