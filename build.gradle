@@ -1,14 +1,14 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.3.61'
-    id 'jacoco'
-    id 'org.jmailen.kotlinter' version '1.26.0'
-    id 'io.gitlab.arturbosch.detekt' version '1.1.1'
-    id 'maven-publish'
-    id 'com.palantir.git-version' version '0.12.2'
+    id "org.jetbrains.kotlin.jvm" version "1.3.61"
+    id "jacoco"
+    id "org.jmailen.kotlinter" version "1.26.0"
+    id "io.gitlab.arturbosch.detekt" version "1.1.1"
+    id "maven-publish"
+    id "com.palantir.git-version" version "0.12.2"
 }
 
 version versionDetails().lastTag
-group 'net.wussmann.kenneth'
+group "net.wussmann.kenneth"
 
 repositories {
     mavenCentral()
@@ -16,23 +16,24 @@ repositories {
 }
 
 dependencies {
-    compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2-1.3.60'
-    implementation 'com.github.kittinunf.fuel:fuel:2.2.1'
-    compileOnly 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+    def junitVersion = "5.6.0"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2-1.3.60"
+    implementation "com.github.kittinunf.fuel:fuel:2.2.1"
+    compileOnly "org.junit.jupiter:junit-jupiter-api:$junitVersion"
 
-    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
-    testCompile 'org.junit.jupiter:junit-jupiter-params:5.5.2'
-    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
-    testCompile 'org.jetbrains.kotlin:kotlin-test:1.3.61'
-    testCompile 'io.mockk:mockk:1.9.3'
+    testCompile "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testCompile "org.junit.jupiter:junit-jupiter-params:$junitVersion"
+    testCompile "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testCompile "org.jetbrains.kotlin:kotlin-test:1.3.61"
+    testCompile "io.mockk:mockk:1.9.3"
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = '1.8'
+    kotlinOptions.jvmTarget = "1.8"
 }
 compileTestKotlin {
-    kotlinOptions.jvmTarget = '1.8'
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 publishing {
@@ -40,7 +41,7 @@ publishing {
         maven {
             credentials {
                 username "KennethWussmann"
-                password System.getenv('GITHUB_TOKEN')
+                password System.getenv("GITHUB_TOKEN")
             }
             url = "https://maven.pkg.github.com/KennethWussmann/mock-fuel"
         }
@@ -50,26 +51,26 @@ publishing {
             from components.java
 
             pom {
-                name = 'mock-fuel'
-                description = 'Mocking Fuel HTTP requests in Kotlin with ease'
-                url = 'https://kenneth.wussmann.net/'
+                name = "mock-fuel"
+                description = "Mocking Fuel HTTP requests in Kotlin with ease"
+                url = "https://kenneth.wussmann.net/"
                 licenses {
                     license {
-                        name = 'MIT License'
-                        url = 'https://raw.githubusercontent.com/KennethWussmann/mock-fuel/master/LICENSE'
+                        name = "MIT License"
+                        url = "https://raw.githubusercontent.com/KennethWussmann/mock-fuel/master/LICENSE"
                     }
                 }
                 developers {
                     developer {
-                        id = 'KennethWussmann'
-                        name = 'Kenneth Wußmann'
-                        email = 'kenneth@wussmann.net'
+                        id = "KennethWussmann"
+                        name = "Kenneth Wußmann"
+                        email = "kenneth@wussmann.net"
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://github.com/KennethWussmann/mock-fuel.git'
-                    developerConnection = 'scm:git:git@github.com:KennethWussmann/mock-fuel.git'
-                    url = 'https://github.com/KennethWussmann/mock-fuel'
+                    connection = "scm:git:git://github.com/KennethWussmann/mock-fuel.git"
+                    developerConnection = "scm:git:git@github.com:KennethWussmann/mock-fuel.git"
+                    url = "https://github.com/KennethWussmann/mock-fuel"
                 }
             }
         }
@@ -77,13 +78,13 @@ publishing {
 }
 
 detekt {
-    input = files('src/main/kotlin')
-    filters = '.*/resources/.*,.*/build/.*,.*test.*,.*/model/.*'
-    config = files('detekt-config.yml')
+    input = files("src/main/kotlin")
+    filters = ".*/resources/.*,.*/build/.*,.*test.*,.*/model/.*"
+    config = files("detekt-config.yml")
 }
 
 jacoco {
-    toolVersion = '0.8.4'
+    toolVersion = "0.8.4"
 }
 
 test {
