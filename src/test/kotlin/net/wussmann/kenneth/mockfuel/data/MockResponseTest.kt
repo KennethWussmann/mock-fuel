@@ -8,6 +8,7 @@ import com.github.kittinunf.fuel.core.requests.DefaultBody
 import java.net.URL
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.test.assertNull
 
 internal class MockResponseTest {
 
@@ -38,7 +39,10 @@ internal class MockResponseTest {
 
     @Test
     fun `Should return predefined ok MockResponse`() {
-        assertEquals(200, MockResponse.ok().statusCode)
+        val response = MockResponse.ok() as AbstractResponse
+        assertEquals(200, response.statusCode)
+        assertEquals(0, response.headers.size)
+        assertNull(response.body)
     }
 
     @Test
