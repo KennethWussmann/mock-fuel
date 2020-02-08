@@ -8,8 +8,11 @@ import com.github.kittinunf.fuel.core.requests.DefaultBody
 import java.net.URL
 
 abstract class AbstractResponse(
+    @JvmField
     open val statusCode: Int = 200,
+    @JvmField
     open val body: ByteArray? = null,
+    @JvmField
     open val headers: Headers = Headers(),
     /**
      * Put some artificial delay to the response to simulate round-trip-time

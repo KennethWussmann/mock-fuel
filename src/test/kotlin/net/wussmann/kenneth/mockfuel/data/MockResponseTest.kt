@@ -39,9 +39,8 @@ internal class MockResponseTest {
 
     @Test
     fun `Should return predefined ok MockResponse`() {
-        val response = MockResponse.ok() as AbstractResponse
+        val response = MockResponse.ok()
         assertEquals(200, response.statusCode)
-        assertEquals(0, response.headers.size)
         assertNull(response.body)
     }
 
