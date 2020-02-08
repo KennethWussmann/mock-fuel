@@ -71,7 +71,7 @@ internal class MockFuelClientTest {
             instance.executeRequest(any())
         }
     }
-    
+
     @Test
     fun `Should pass through request to remote when PassThroughResponse used`() {
         mockFuelStore enqueue PassThroughResponse
