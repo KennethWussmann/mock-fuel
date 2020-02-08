@@ -25,7 +25,7 @@ data class MockRequestMatcher(
      * Check if the given Fuel [Request] is matching this [MockRequestMatcher]
      */
     fun matches(request: Request): Boolean {
-        val requestQueryParams = mapQueryParams(request.url.query) ?: emptyList()
+        val requestQueryParams = (mapQueryParams(request.url.query) ?: emptyList()).plus(request.parameters)
         return when {
             method != null && method != request.method -> false
             path != null && request.url.path != path -> false
