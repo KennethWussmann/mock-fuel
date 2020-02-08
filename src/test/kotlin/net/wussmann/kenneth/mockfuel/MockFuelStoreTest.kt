@@ -4,13 +4,13 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Method
+import kotlin.test.assertEquals
+import kotlin.test.assertFails
+import kotlin.test.assertTrue
 import net.wussmann.kenneth.mockfuel.data.MockRequestMatcher
 import net.wussmann.kenneth.mockfuel.data.MockResponse
-import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.assertFails
+import org.junit.jupiter.api.Test
 
 internal class MockFuelStoreTest {
 
@@ -169,7 +169,7 @@ internal class MockFuelStoreTest {
         assertEquals("/something", requestResponse.key.path)
         assertEquals("fake.local", requestResponse.key.host)
         assertTrue("Something".toByteArray().contentEquals(requestResponse.key.body!!))
-        assertEquals(mapOf("Example" to listOf("Test")), requestResponse.key.headers)
+        assertEquals(listOf("Test"), requestResponse.key.headers?.get("Example"))
         assertEquals(listOf("abc" to "123"), requestResponse.key.queryParams)
 
         assertEquals(200, requestResponse.value.statusCode)
