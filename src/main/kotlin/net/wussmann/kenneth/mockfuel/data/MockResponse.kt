@@ -1,11 +1,11 @@
 package net.wussmann.kenneth.mockfuel.data
 
 import com.github.kittinunf.fuel.core.BodyLength
+import java.net.URL
 import com.github.kittinunf.fuel.core.BodySource
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.fuel.core.requests.DefaultBody
-import java.net.URL
 
 /**
  * Representation of a response that should be returned
@@ -20,6 +20,10 @@ data class MockResponse(
      * Get the body as string
      */
     fun body(): String? = body?.let { String(it) }
+
+
+
+
 
     /**
      * Map the [MockResponse] to a Fuel [Response]

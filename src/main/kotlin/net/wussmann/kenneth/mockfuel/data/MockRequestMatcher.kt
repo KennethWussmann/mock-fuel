@@ -1,9 +1,9 @@
 package net.wussmann.kenneth.mockfuel.data
 
-import com.github.kittinunf.fuel.core.Headers
-import com.github.kittinunf.fuel.core.Method
 import com.github.kittinunf.fuel.core.Parameters
+import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Request
+import com.github.kittinunf.fuel.core.Method
 
 /**
  * Representation for a request to match it against Fuel request
