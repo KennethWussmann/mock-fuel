@@ -32,8 +32,13 @@ internal class MockResponseTest {
     )
 
     @Test
-    fun `Should return predefined MockResponse`() {
+    fun `Should return predefined time out MockResponse`() {
         assertEquals(408, MockResponse.timeout().statusCode)
+    }
+
+    @Test
+    fun `Should return predefined ok MockResponse`() {
+        assertEquals(200, MockResponse.ok().statusCode)
     }
 
     @Test

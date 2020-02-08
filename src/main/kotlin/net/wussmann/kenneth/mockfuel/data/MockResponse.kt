@@ -1,44 +1,28 @@
 package net.wussmann.kenneth.mockfuel.data
 
-import com.github.kittinunf.fuel.core.BodyLength
-import com.github.kittinunf.fuel.core.BodySource
 import com.github.kittinunf.fuel.core.Headers
-import com.github.kittinunf.fuel.core.Response
-import com.github.kittinunf.fuel.core.requests.DefaultBody
-import java.net.URL
 
 /**
  * Representation of a response that should be returned
  */
 data class MockResponse(
-    val statusCode: Int,
-    val body: ByteArray? = null,
-    val headers: Headers = Headers(),
-    val delay: Long = 0
-) {
+    override val statusCode: Int,
+    override val body: ByteArray? = null,
+    override val headers: Headers = Headers(),
     /**
-     * Get the body as string
+     * Put some artificial delay to the response to simulate round-trip-time
      */
-    fun body(): String? = body?.let { String(it) }
-
-    /**
-     * Map the [MockResponse] to a Fuel [Response]
-     */
-    fun toResponse(url: URL) = Response(
-            url = url,
-            statusCode = statusCode,
-            headers = headers,
-            body = if (body != null) {
-                val bodySource: BodySource = { body.inputStream() }
-                val bodyLength: BodyLength = { body.size.toLong() }
-                DefaultBody.from(bodySource, bodyLength, Charsets.UTF_8)
-            } else DefaultBody()
-    )
+    override val delay: Long = 0
+) : AbstractResponse(statusCode, body, headers, delay) {
 
     companion object {
         /**
          * Predefined [MockResponse] for a request that timed-out
          */
         fun timeout() = MockResponse(statusCode = 408)
+        /**
+         * Predefined [MockResponse] for a request that was OK
+         */
+        fun ok() = MockResponse(statusCode = 200)
     }
 }
