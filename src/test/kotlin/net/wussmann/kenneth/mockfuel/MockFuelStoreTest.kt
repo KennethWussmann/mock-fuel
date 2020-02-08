@@ -269,4 +269,20 @@ internal class MockFuelStoreTest {
             mockFuelStore.verifyRequest()
         }
     }
+
+    @Test
+    fun `Should intercept request on query parameter matching`() {
+        mockFuelStore.on(queryParams = listOf("something" to null, "abc" to "yes", "sz" to "12", "sz" to "34")) {
+            MockResponse(200, body = "Intercepted!".toByteArray())
+        }
+        val fuelManager = FuelManager()
+        fuelManager.client = MockFuelClient(mockFuelStore)
+
+        val response = fuelManager.get("https://fake.local/hello?something&abc=yes", parameters = listOf("sz" to "12", "sz" to "34"))
+            .responseString()
+            .third
+            .get()
+
+        assertEquals("Intercepted!", response)
+    }
 }
