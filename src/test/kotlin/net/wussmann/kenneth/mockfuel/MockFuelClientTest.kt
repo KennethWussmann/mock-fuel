@@ -1,11 +1,14 @@
 package net.wussmann.kenneth.mockfuel
 
 import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.Client
 import com.github.kittinunf.fuel.core.FuelManager
+import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import net.wussmann.kenneth.mockfuel.data.MockResponse
+import net.wussmann.kenneth.mockfuel.data.PassThroughResponse
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -15,7 +18,8 @@ import org.junit.jupiter.params.provider.ValueSource
 
 internal class MockFuelClientTest {
 
-    private val mockFuelStore = MockFuelStore()
+    private val mockPassThroughClient = mockk<Client>(relaxed = true)
+    private val mockFuelStore = MockFuelStore(passThroughClient = mockPassThroughClient)
     private val instance = spyk(MockFuelClient(mockFuelStore))
 
     @BeforeEach
@@ -66,5 +70,16 @@ internal class MockFuelClientTest {
         verify {
             instance.executeRequest(any())
         }
+    }
+
+    @Test
+    fun `Should pass through request to remote when PassThroughResponse used`() {
+        mockFuelStore enqueue PassThroughResponse
+        val request = Fuel.post("/test")
+
+        instance.executeRequest(request)
+
+        verify { mockPassThroughClient.executeRequest(eq(request)) }
+        mockFuelStore.verifyRequest()
     }
 }

@@ -1,9 +1,12 @@
 package net.wussmann.kenneth.mockfuel
 
+import com.github.kittinunf.fuel.core.Client
+import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Method
 import com.github.kittinunf.fuel.core.Parameters
 import com.github.kittinunf.fuel.core.Request
+import net.wussmann.kenneth.mockfuel.data.AbstractResponse
 import net.wussmann.kenneth.mockfuel.data.MockRequestMatcher
 import net.wussmann.kenneth.mockfuel.data.MockResponse
 import net.wussmann.kenneth.mockfuel.junit.MockRequestVerifier
@@ -12,12 +15,13 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 /**
  * Store for Fuel responses to requests
  */
-class MockFuelStore {
-
-    val requestResponseMap: MutableMap<MockRequestMatcher, MockResponse> = mutableMapOf()
-    val responseQueue: MutableList<MockResponse> = mutableListOf()
-    val recordedRequests: MutableList<MockRequestMatcher> = mutableListOf()
-    var defaultResponse: MockResponse = createDefaultMockResponse()
+class MockFuelStore(
+    val requestResponseMap: MutableMap<MockRequestMatcher, AbstractResponse> = mutableMapOf(),
+    val responseQueue: MutableList<AbstractResponse> = mutableListOf(),
+    val recordedRequests: MutableList<MockRequestMatcher> = mutableListOf(),
+    val passThroughClient: Client = FuelManager.instance.client
+) {
+    var defaultResponse: AbstractResponse = createDefaultMockResponse()
 
     private fun takeFirst() = responseQueue.firstOrNull()?.also { responseQueue.removeAt(0) }
 
@@ -29,9 +33,9 @@ class MockFuelStore {
     )
 
     /**
-     * Find a [MockResponse] for a given Fuel [Request]
+     * Find an [AbstractResponse] for a given Fuel [Request]
      */
-    fun findResponse(request: Request): MockResponse = requestResponseMap.entries
+    fun findResponse(request: Request): AbstractResponse = requestResponseMap.entries
         .firstOrNull { (key, _) -> key.matches(request) }
         ?.value
         ?: takeFirst()
@@ -41,7 +45,7 @@ class MockFuelStore {
      * Add the response to the queue.
      * It will be served as response when there is a request and no other response was found to match.
      */
-    fun enqueue(mockResponse: MockResponse) = responseQueue.add(mockResponse)
+    fun enqueue(response: AbstractResponse) = responseQueue.add(response)
 
     /**
      * Reset the response queue, matching responses, recorded requests and the default response
@@ -63,7 +67,7 @@ class MockFuelStore {
         body: ByteArray? = null,
         headers: Headers? = null,
         queryParams: Parameters? = null,
-        answer: () -> MockResponse
+        answer: () -> AbstractResponse
     ) {
         val matcher = MockRequestMatcher(
             method,
@@ -90,9 +94,9 @@ class MockFuelStore {
 }
 
 /**
- * Infix for enqueuing [MockResponse]s to the [MockFuelStore]
+ * Infix for enqueuing [AbstractResponse]s to the [MockFuelStore]
  */
-infix fun MockFuelStore.enqueue(mockResponse: MockResponse) = this.enqueue(mockResponse)
+infix fun MockFuelStore.enqueue(abstractResponse: AbstractResponse) = this.enqueue(abstractResponse)
 
 /**
  * Infix for verifying the next request in queue

@@ -6,6 +6,7 @@ import com.github.kittinunf.fuel.core.Headers
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.fuel.core.requests.DefaultBody
 import java.net.URL
+import kotlin.test.assertNull
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -32,8 +33,15 @@ internal class MockResponseTest {
     )
 
     @Test
-    fun `Should return predefined MockResponse`() {
+    fun `Should return predefined time out MockResponse`() {
         assertEquals(408, MockResponse.timeout().statusCode)
+    }
+
+    @Test
+    fun `Should return predefined ok MockResponse`() {
+        val response = MockResponse.ok()
+        assertEquals(200, response.statusCode)
+        assertNull(response.body)
     }
 
     @Test

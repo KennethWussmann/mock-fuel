@@ -161,6 +161,22 @@ fun `Should return response for certain request`(mockFuelStore: MockFuelStore) {
 }
 ```
 
+### Pass through responses
+Sometimes you might want Fuel to actually send a request. You can do that with the `PassThroughResponse` like this:
+```Kotlin
+mockFuelStore enqueue PassThroughResponse
+
+// mock-fuel will not intercept the next request
+Fuel.get("http://example.com/test").responseString()
+
+// but you can still use mock-fuel to verify the request structure
+mockFuelStore.verifyRequest {
+    assertPath("/test")
+}
+```
+
+> You can use `PassThroughResponse` everywhere where you could use a `MockResponse` - including [Dispatching](#dispatching)
+
 ### Verify requests
 mock-fuel comes with some utility assertions to ensure that the request that was sent meets certain requirements.
 

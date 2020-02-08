@@ -6,6 +6,7 @@ import com.github.kittinunf.fuel.core.Response
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import net.wussmann.kenneth.mockfuel.data.MockRequestMatcher
+import net.wussmann.kenneth.mockfuel.data.PassThroughResponse
 
 /**
  * Implementation of the Fuel http client that doesn't emit requests to any external services
@@ -20,6 +21,8 @@ class MockFuelClient(private val mockFuelStore: MockFuelStore) : Client {
                 delay(response.delay)
             }
         }
-        return response.toResponse(request.url)
+        return if (response is PassThroughResponse) {
+            mockFuelStore.passThroughClient.executeRequest(request)
+        } else response.toResponse(request.url)
     }
 }
